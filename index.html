@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Customer Satisfaction Survey | Holy Angel University</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link href="css/survey_aesthetic.css" rel="stylesheet">
+    <meta name="description" content="Customer Satisfaction Survey Portal for Holy Angel University">
+</head>
+<body>
+    <!-- Dynamic Interactive Background -->
+    <canvas id="bg-canvas"></canvas>
+
+    <div class="survey-container">
+        <!-- Success/Error Message (injected by JS) -->
+        <div id="form-alert" class="d-none m-4" role="alert"></div>
+
+        <!-- Header Section -->
+        <header class="form-header-grid">
+            <div class="header-logo-section">
+                <img src="images/HAU.png" alt="HAU Logo" class="hau-logo-img-small">
+            </div>
+            <div class="header-title-section">
+                <h1 class="official-title">Holy Angel University</h1>
+                <h2 class="official-subtitle">Customer Satisfaction Form</h2>
+            </div>
+            <div class="header-doc-box">
+                <div class="doc-line">FM-AAC-2006</div>
+                <div class="doc-line">Revision: 0</div>
+                <div class="doc-line">Effectivity: May 2025</div>
+            </div>
+        </header>
+
+        <form class="needs-validation" novalidate id="surveyForm">
+            <!-- Name Row -->
+            <div class="form-row">
+                <label class="row-label">Name <small>(Optional)</small></label>
+                <div class="row-content">
+                    <input type="text" name="name" id="name" placeholder="Enter your full name or leave blank">
+                </div>
+            </div>
+
+            <!-- Category Row -->
+            <div class="form-row">
+                <label class="row-label">Your Category</label>
+                <div class="row-content">
+                    <div class="category-group">
+                        <div class="cat-item">
+                            <input class="form-check-input" type="radio" name="category" value="Student" id="cat_student" required>
+                            <label class="form-check-label" for="cat_student">Student</label>
+                        </div>
+                        <div class="cat-item">
+                            <input class="form-check-input" type="radio" name="category" value="Employee" id="cat_employee">
+                            <label class="form-check-label" for="cat_employee">Employee</label>
+                        </div>
+                        <div class="cat-item">
+                            <input class="form-check-input" type="radio" name="category" value="Others" id="cat_others">
+                            <label class="form-check-label" for="cat_others">Others</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Service Row -->
+            <div class="form-row">
+                <label class="row-label">Service / Purpose of Visit</label>
+                <div class="row-content">
+                    <input type="text" name="service" id="service" placeholder="e.g. Enrollment, Document Request, Inquiry" required>
+                </div>
+            </div>
+
+            <!-- Satisfaction Section -->
+            <div class="satisfaction-section">
+                <h3 class="section-title">Are you satisfied with our service?</h3>
+                <div class="satisfaction-options">
+                    <input type="radio" class="btn-check" name="satisfaction" id="satisfied" value="Satisfied" required>
+                    <label class="sat-option" for="satisfied">
+                        <i class="far fa-smile sm-smile"></i>
+                        <span class="sat-label">Satisfied</span>
+                    </label>
+                    
+                    <input type="radio" class="btn-check" name="satisfaction" id="notsatisfied" value="Not Satisfied">
+                    <label class="sat-option" for="notsatisfied">
+                        <i class="far fa-frown sm-frown"></i>
+                        <span class="sat-label">Not Satisfied</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Comment Section -->
+            <div class="comments-section">
+                <label class="comments-label" for="comments">Comments & Suggestions</label>
+                <textarea class="comments-area" name="comments" id="comments" placeholder="We value your feedback. Please share your thoughts here..."></textarea>
+            </div>
+
+            <!-- Submit Button Area -->
+            <div class="btn-submit-container">
+                <button type="submit" class="btn-submit-premium" id="submitBtn">
+                    Submit Feedback
+                </button>
+            </div>
+        </form>
+
+        <footer class="admin-footer">
+            <p id="footer-year"></p>
+            <a href="admin_login.html" class="admin-link">Admin Dashboard Access</a>
+        </footer>
+    </div>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- IndexedDB Module -->
+    <script src="js/db.js"></script>
+    <script>
+        // Footer year
+        document.getElementById('footer-year').textContent =
+            '\u00A9 ' + new Date().getFullYear() + ' Holy Angel University - Customer Satisfaction Portal';
+
+        // Form submission → IndexedDB
+        document.getElementById('surveyForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            // Bootstrap validation
+            if (!this.checkValidity()) {
+                this.classList.add('was-validated');
+                return;
+            }
+
+            const formData = new FormData(this);
+            const data = {
+                name: formData.get('name')?.trim() || '',
+                category: formData.get('category') || '',
+                service: formData.get('service')?.trim() || '',
+                satisfaction: formData.get('satisfaction'),
+                comments: formData.get('comments')?.trim() || ''
+            };
+
+            // Validate satisfaction (required)
+            if (!data.satisfaction) {
+                showAlert('Please select a satisfaction rating.', 'danger');
+                return;
+            }
+
+            try {
+                await DB.insert(data);
+                showAlert('Feedback submitted successfully!', 'success');
+                this.reset();
+                this.classList.remove('was-validated');
+            } catch (err) {
+                console.error('Insert error:', err);
+                showAlert('An error occurred while saving your feedback. Please try again.', 'danger');
+            }
+        });
+
+        function showAlert(message, type) {
+            const alertEl = document.getElementById('form-alert');
+            const icon = type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle';
+            alertEl.className = 'alert alert-' + type + ' alert-dismissible fade show m-4';
+            alertEl.innerHTML =
+                '<i class="fas ' + icon + ' me-2"></i>' +
+                escapeHtml(message) +
+                '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+    </script>
+    <script src="js/interactive_bg.js?v=1.1"></script>
+</body>
+</html>

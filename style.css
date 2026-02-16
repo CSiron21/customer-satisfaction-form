@@ -1,0 +1,80 @@
+/* Tablet-Friendly Styling */
+body {
+  background-color: #f0f2f5;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.form-card {
+  border-radius: 1px;
+  /* More formal look like a paper form */
+  border-top: 5px solid #800000;
+  /* Maroon for HAU */
+}
+
+/* Typography map to official form feel */
+h2,
+h3 {
+  font-family: "Times New Roman", Times, serif;
+  color: #333;
+}
+
+.form-control-lg {
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 1.1rem;
+}
+
+.btn-lg {
+  border-radius: 50px;
+  padding: 15px 30px;
+  font-size: 1.2rem;
+  letter-spacing: 1px;
+}
+
+/* Large Checkboxes for Tablet */
+.form-check-input {
+  width: 1.5em;
+  height: 1.5em;
+  margin-top: 0.1em;
+  margin-right: 0.5em;
+  cursor: pointer;
+  border: 2px solid #6c757d;
+}
+
+.form-check-label {
+  font-size: 1.2rem;
+  padding-top: 3px;
+  cursor: pointer;
+}
+
+/* Satisfaction Toggle Buttons */
+.btn-outline-success:hover,
+.btn-check:checked + .btn-outline-success {
+  background-color: #198754;
+  color: white;
+}
+
+.btn-outline-danger:hover,
+.btn-check:checked + .btn-outline-danger {
+  background-color: #dc3545;
+  color: white;
+}
+
+.btn-check:checked + .btn-outline-success i,
+.btn-check:checked + .btn-outline-danger i {
+  transform: scale(1.2);
+  transition: transform 0.2s;
+}
+
+/* Tablet Optimizations */
+@media (min-width: 768px) {
+  .container {
+    max-width: 900px;
+  }
+}
+
+/* =========================================
+   Login Page Styles (Premium Redesign)
+   Note: New styles are now in css/admin_login.css
+   ========================================= */
+
