@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     // --- Load submissions from IndexedDB ---
     let submissions = [];
     try {
-        submissions = await DB.getAll();
+        submissions = await API.getAllSubmissions();
     } catch (err) {
         console.error('Failed to load submissions:', err);
     }

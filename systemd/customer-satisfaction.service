@@ -1,0 +1,13 @@
+[Unit]
+Description=Customer Satisfaction Form Backend
+After=network.target mysql.service
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/var/www/customer-satisfaction-form
+ExecStart=/usr/bin/node server.js
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
