@@ -169,14 +169,33 @@
             }
         });
 
+        let alertTimeout;
+
         function showAlert(message, type) {
             const alertEl = document.getElementById('form-alert');
             const icon = type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle';
-            alertEl.className = 'alert alert-' + type + ' alert-dismissible fade show m-4';
+
+            // Clear existing timeout
+            if (alertTimeout) {
+                clearTimeout(alertTimeout);
+                alertTimeout = null;
+            }
+
+            // Reset class and content
+            alertEl.className = 'alert alert-' + type + ' fade show m-4 position-fixed top-0 start-50 translate-middle-x';
+            alertEl.style.zIndex = '9999';
             alertEl.innerHTML =
                 '<i class="fas ' + icon + ' me-2"></i>' +
-                escapeHtml(message) +
-                '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
+                escapeHtml(message);
+
+            // Hide after 2 seconds
+            alertTimeout = setTimeout(() => {
+                alertEl.classList.remove('show');
+                // Wait for fade transition then hide
+                setTimeout(() => {
+                    alertEl.className = 'd-none m-4';
+                }, 150);
+            }, 2000);
         }
 
         function escapeHtml(text) {
