@@ -2,7 +2,13 @@
  * API Wrapper - Replaces client-side DB interactions
  */
 const API = {
-    baseUrl: '/api',
+    // Detect if running on localhost (dev) or production (behind Nginx)
+    // If protocol is file:, or if hostname is localhost/127.0.0.1 but port is NOT 3000 (e.g. Live Server on 5500),
+    // we assume the backend is on http://localhost:3000.
+    // Otherwise (production), use relative path /api.
+    baseUrl: (window.location.protocol === 'file:' || (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') && window.location.port !== '3000')
+        ? 'http://localhost:3000/api'
+        : '/api',
 
     async submitFeedback(data) {
         const response = await fetch(`${this.baseUrl}/submissions`, {
