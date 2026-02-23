@@ -41,8 +41,10 @@ body {
 }
 
 .survey-container {
-    width: 100%;
-    max-width: 780px;
+    width: 85vw;
+    max-width: 1400px;
+    height: 90vh;
+    /* Fill 90% of the screen height */
     background: var(--white);
     border-radius: var(--border-radius);
     box-shadow: var(--shadow-premium);
@@ -87,14 +89,14 @@ body {
 }
 
 .official-title {
-    font-size: 1.1rem;
+    font-size: 1.8rem;
     font-weight: 700;
     color: var(--hau-maroon);
     margin: 0;
 }
 
 .official-subtitle {
-    font-size: 0.75rem;
+    font-size: 1.1rem;
     color: var(--text-muted);
     margin: 0;
     text-transform: uppercase;
@@ -110,10 +112,34 @@ body {
 
 /* Form Content */
 form {
-    padding: 12px 30px;
+    padding: 20px 40px;
+    /* Larger padding to match size */
     flex: 1;
     overflow-y: auto;
-    /* Fallback internal scroll */
+    display: flex;
+    flex-direction: column;
+}
+
+.form-columns {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: stretch;
+}
+
+.form-column-left,
+.form-column-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+@media (max-width: 768px) {
+    .form-columns {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
 }
 
 .form-row {
@@ -121,18 +147,18 @@ form {
 }
 
 .row-label {
-    font-size: 0.7rem;
+    font-size: 1rem;
     font-weight: 700;
     color: var(--hau-maroon);
     text-transform: uppercase;
-    margin-bottom: 4px;
+    margin-bottom: 6px;
     display: block;
 }
 
 .row-content input[type="text"] {
     width: 100%;
-    padding: 8px 15px;
-    font-size: 0.85rem;
+    padding: 18px 20px;
+    font-size: 1.15rem;
     border: 2px solid #f5f5f5;
     border-radius: 10px;
     background: #fcfcfc;
@@ -163,14 +189,15 @@ form {
 }
 
 .cat-item label {
-    padding: 6px 18px;
-    font-size: 0.8rem;
+    padding: 15px 24px;
+    font-size: 1.15rem;
     background: #f8f8f8;
     border: 1.5px solid #eee;
-    border-radius: 20px;
+    border-radius: 25px;
     cursor: pointer;
     transition: var(--transition);
     color: var(--text-muted);
+    display: inline-block;
 }
 
 .cat-item input:checked+label {
@@ -189,10 +216,10 @@ form {
 }
 
 .section-title {
-    font-size: 0.8rem;
+    font-size: 1.2rem;
     font-weight: 700;
     text-align: center;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
     color: var(--hau-maroon);
     text-transform: uppercase;
 }
@@ -207,8 +234,8 @@ form {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
-    padding: 10px;
+    gap: 12px;
+    padding: 24px;
     background: #fff;
     border: 2px solid #f5f5f5;
     border-radius: 12px;
@@ -217,12 +244,12 @@ form {
 }
 
 .sat-option i {
-    font-size: 1.4rem;
+    font-size: 2.2rem;
     color: #ddd;
 }
 
 .sat-label {
-    font-size: 0.85rem;
+    font-size: 1.2rem;
     font-weight: 600;
     color: #999;
 }
@@ -249,14 +276,19 @@ form {
 
 /* Comments */
 .comments-section {
-    margin-top: 12px;
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
 }
 
 .comments-area {
     width: 100%;
-    height: 50px;
-    padding: 10px 15px;
-    font-size: 0.85rem;
+    flex: 1;
+    min-height: 120px;
+    /* Minimum height before grid expansion */
+    padding: 20px 20px;
+    font-size: 1.15rem;
     border: 2px solid #f5f5f5;
     border-radius: 10px;
     background: #fcfcfc;
@@ -272,7 +304,7 @@ form {
 
 /* Submit Area */
 .btn-submit-container {
-    padding: 15px 0 5px;
+    padding: 25px 0 10px;
     text-align: center;
 }
 
@@ -280,8 +312,8 @@ form {
     background: var(--hau-maroon);
     color: #fff;
     border: none;
-    padding: 12px 50px;
-    font-size: 0.95rem;
+    padding: 18px 70px;
+    font-size: 1.4rem;
     font-weight: 700;
     border-radius: 50px;
     text-transform: uppercase;
@@ -361,5 +393,48 @@ form {
     .satisfaction-options {
         flex-direction: column;
         gap: 8px;
+    }
+}
+
+/* Touch Indicator floating widget */
+.touch-indicator {
+    position: fixed;
+    bottom: 30px;
+    right: 40px;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 15px 30px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    border: 3px solid var(--hau-maroon);
+    color: var(--hau-maroon);
+    font-weight: 700;
+    font-size: 1.3rem;
+    z-index: 1000;
+    pointer-events: none;
+    /* Prevents it from blocking clicks to underlying items */
+}
+
+.pulse-icon {
+    font-size: 1.8rem;
+    animation: touchPulse 1.8s infinite ease-in-out;
+}
+
+@keyframes touchPulse {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(1.25);
+        opacity: 0.6;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
     }
 }
