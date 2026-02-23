@@ -444,8 +444,8 @@ form {
 form::-webkit-scrollbar,
 .submissions-table::-webkit-scrollbar,
 .comments-area::-webkit-scrollbar {
-    width: 14px;
-    height: 14px;
+    width: 40px;
+    height: 40px;
 }
 
 ::-webkit-scrollbar-track,
@@ -453,21 +453,21 @@ form::-webkit-scrollbar-track,
 .submissions-table::-webkit-scrollbar-track,
 .comments-area::-webkit-scrollbar-track {
     background: #f1f1f1;
-    border-radius: 10px;
+    border-radius: 20px;
 }
 
 ::-webkit-scrollbar-thumb,
 form::-webkit-scrollbar-thumb,
 .submissions-table::-webkit-scrollbar-thumb,
 .comments-area::-webkit-scrollbar-thumb {
-    background: #c1c1c1;
-    border-radius: 10px;
-    border: 3px solid #f1f1f1;
+    background: #a8a8a8;
+    border-radius: 20px;
+    border: 7px solid #f1f1f1;
 }
 
 ::-webkit-scrollbar-thumb:hover,
 form::-webkit-scrollbar-thumb:hover,
 .submissions-table::-webkit-scrollbar-thumb:hover,
 .comments-area::-webkit-scrollbar-thumb:hover {
-    background: #a8a8a8;
+    background: #888888;
 }
