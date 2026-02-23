@@ -161,6 +161,11 @@
 
             try {
                 await API.submitFeedback(data);
+                
+                // Play success chime SFX
+                const audio = new Audio('sfx/success-chime-sfx.mp3');
+                audio.play().catch(e => console.error("Audio playback failed:", e));
+
                 showAlert('Feedback submitted successfully!', 'success');
                 this.reset();
                 this.classList.remove('was-validated');
