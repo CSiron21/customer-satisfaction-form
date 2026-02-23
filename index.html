@@ -48,7 +48,8 @@
             <div class="form-row">
                 <label class="row-label">Name <small>(Optional)</small></label>
                 <div class="row-content">
-                    <input type="text" name="name" id="name" placeholder="Enter your full name or leave blank">
+                    <input type="text" name="name" id="name" placeholder="Enter your full name or leave blank"
+                        autocomplete="off">
                 </div>
             </div>
 
@@ -80,7 +81,7 @@
                 <label class="row-label">Service / Purpose of Visit</label>
                 <div class="row-content">
                     <input type="text" name="service" id="service"
-                        placeholder="e.g. Enrollment, Document Request, Inquiry" required>
+                        placeholder="e.g. Enrollment, Document Request, Inquiry" required autocomplete="off">
                 </div>
             </div>
 
@@ -145,7 +146,9 @@
 
             const formData = new FormData(this);
             const data = {
+                name: formData.get('name')?.trim() || '',
                 category: formData.get('category') || '',
+                service: formData.get('service')?.trim() || '',
                 satisfaction: formData.get('satisfaction'),
                 comments: formData.get('comments')?.trim() || ''
             };
