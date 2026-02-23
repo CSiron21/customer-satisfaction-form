@@ -157,6 +157,86 @@
     <script src="../js/auth.js"></script>
     <script src="../js/api.js"></script>
     <script src="../js/dashboard.js"></script>
+
+    <!-- Full-page drag-to-scroll (touch + mouse) -->
+    <!-- Works on the whole page; yields to #table-content's own internal drag -->
+    <script>
+        (function initPageDragScroll() {
+            var isDragging = false;
+            var startY = 0;
+            var scrollStart = 0;
+            var lastY = 0;
+            var velocity = 0;
+            var lastTime = 0;
+            var rafId = null;
+            var scrollEl = document.documentElement; // scrolls the whole page
+
+            function getClientY(e) {
+                return e.touches ? e.touches[0].clientY : e.clientY;
+            }
+
+            function isInsideTableContent(target) {
+                var tc = document.getElementById('table-content');
+                return tc && tc.contains(target);
+            }
+
+            function onStart(e) {
+                // Let the table's own drag handler deal with touches inside it
+                if (isInsideTableContent(e.target)) return;
+                // Don't hijack interactive controls
+                if (e.target.closest('button, a, select, input, textarea, label')) return;
+
+                isDragging = true;
+                startY = getClientY(e);
+                scrollStart = scrollEl.scrollTop;
+                lastY = startY;
+                velocity = 0;
+                lastTime = Date.now();
+                if (rafId) cancelAnimationFrame(rafId);
+            }
+
+            function onMove(e) {
+                if (!isDragging) return;
+                e.preventDefault();
+
+                var y = getClientY(e);
+                var now = Date.now();
+                var dt = now - lastTime || 1;
+
+                velocity = (lastY - y) / dt;
+                lastY = y;
+                lastTime = now;
+
+                scrollEl.scrollTop = scrollStart + (startY - y);
+            }
+
+            function onEnd() {
+                if (!isDragging) return;
+                isDragging = false;
+
+                // Momentum glide
+                var speed = velocity * 16;
+                function glide() {
+                    if (Math.abs(speed) < 0.5) return;
+                    scrollEl.scrollTop += speed;
+                    speed *= 0.90;
+                    rafId = requestAnimationFrame(glide);
+                }
+                glide();
+            }
+
+            // Touch
+            document.addEventListener('touchstart', onStart, { passive: true });
+            document.addEventListener('touchmove', onMove, { passive: false });
+            document.addEventListener('touchend', onEnd);
+            document.addEventListener('touchcancel', onEnd);
+
+            // Mouse
+            document.addEventListener('mousedown', onStart);
+            document.addEventListener('mousemove', onMove);
+            document.addEventListener('mouseup', onEnd);
+        })();
+    </script>
 </body>
 
 </html>
