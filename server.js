@@ -82,15 +82,15 @@ let dbPool;
 // Submit Feedback
 app.post('/api/submissions', async (req, res) => {
     try {
-        const { name, category, service, satisfaction, comments } = req.body;
+        const { category, satisfaction, comments } = req.body;
 
         if (!satisfaction) {
             return res.status(400).json({ error: 'Satisfaction rating is required.' });
         }
 
         const [result] = await dbPool.execute(
-            'INSERT INTO submissions (name, category, service, satisfaction, comments) VALUES (?, ?, ?, ?, ?)',
-            [name || null, category || null, service || null, satisfaction, comments || null]
+            'INSERT INTO submissions (category, satisfaction, comments) VALUES (?, ?, ?)',
+            [category || null, satisfaction, comments || null]
         );
 
         res.status(201).json({ message: 'Feedback submitted successfully', id: result.insertId });
