@@ -54,11 +54,13 @@ document.addEventListener('DOMContentLoaded', async function () {
     const entriesSelect = document.getElementById('entries-select');
 
     // --- Entries selector handler ---
-    entriesSelect.addEventListener('change', function () {
-        entriesPerPage = parseInt(this.value, 10);
-        currentPage = 1;
-        renderTable();
-    });
+    if (entriesSelect) {
+        entriesSelect.addEventListener('change', function () {
+            entriesPerPage = parseInt(this.value, 10);
+            currentPage = 1;
+            renderTable();
+        });
+    }
 
     // --- Render Table with Pagination ---
     function renderTable() {
@@ -69,7 +71,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                 '<h3>No Submissions Yet</h3>' +
                 '<p>Submissions from the customer satisfaction form will appear here.</p>' +
                 '</div>';
-            tableFooter.style.display = 'none';
+            if (tableFooter) tableFooter.style.display = 'none';
             return;
         }
 
@@ -128,7 +130,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         tableContent.innerHTML = html;
 
         // Update pagination info
-        paginationInfo.textContent = 'Showing ' + (start + 1) + ' to ' + end + ' of ' + submissions.length + ' entries';
+        if (paginationInfo) paginationInfo.textContent = 'Showing ' + (start + 1) + ' to ' + end + ' of ' + submissions.length + ' entries';
 
         // Build pagination controls
         var paginationHtml = '';
@@ -161,31 +163,33 @@ document.addEventListener('DOMContentLoaded', async function () {
         paginationHtml += '<i class="fas fa-chevron-right"></i>';
         paginationHtml += '</button>';
 
-        paginationControls.innerHTML = paginationHtml;
-        tableFooter.style.display = 'flex';
+        if (paginationControls) paginationControls.innerHTML = paginationHtml;
+        if (tableFooter) tableFooter.style.display = 'flex';
 
         // Attach modal listener to new tbody
         attachModalListeners();
     }
 
     // --- Pagination click handler ---
-    paginationControls.addEventListener('click', function (e) {
-        var btn = e.target.closest('.page-btn');
-        if (!btn || btn.disabled) return;
+    if (paginationControls) {
+        paginationControls.addEventListener('click', function (e) {
+            var btn = e.target.closest('.page-btn');
+            if (!btn || btn.disabled) return;
 
-        var page = btn.dataset.page;
-        var totalPages = Math.ceil(submissions.length / entriesPerPage);
+            var page = btn.dataset.page;
+            var totalPages = Math.ceil(submissions.length / entriesPerPage);
 
-        if (page === 'prev') {
-            currentPage = Math.max(1, currentPage - 1);
-        } else if (page === 'next') {
-            currentPage = Math.min(totalPages, currentPage + 1);
-        } else {
-            currentPage = parseInt(page, 10);
-        }
+            if (page === 'prev') {
+                currentPage = Math.max(1, currentPage - 1);
+            } else if (page === 'next') {
+                currentPage = Math.min(totalPages, currentPage + 1);
+            } else {
+                currentPage = parseInt(page, 10);
+            }
 
-        renderTable();
-    });
+            renderTable();
+        });
+    }
 
     // --- Modal: event delegation ---
     var detailsModal = new bootstrap.Modal(document.getElementById('submissionModal'));
