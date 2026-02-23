@@ -261,6 +261,26 @@ body {
     cursor: not-allowed;
 }
 
+/* --- Scrollable Table Container --- */
+#table-content {
+    max-height: 65vh;
+    /* limits height so the user can scroll */
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    /* smooth momentum on iOS */
+    overscroll-behavior: contain;
+    cursor: grab;
+    user-select: none;
+    /* prevent text selection while dragging */
+    -webkit-user-select: none;
+}
+
+#table-content.is-dragging {
+    cursor: grabbing;
+    scroll-behavior: auto;
+    /* disable smooth-scroll during drag */
+}
+
 /* --- Responsive Table --- */
 .table-responsive {
     overflow-x: auto;

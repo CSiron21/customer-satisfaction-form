@@ -255,3 +255,81 @@ function escapeAttr(text) {
         .replace(/</g, '&lt;')
         .replace(/>/g, '&gt;');
 }
+
+/**
+ * Drag-to-scroll on #table-content.
+ * Supports both touch (swipe) and mouse (click-drag) with momentum.
+ */
+(function initDragScroll() {
+    var el = document.getElementById('table-content');
+    if (!el) return;
+
+    var isDragging = false;
+    var startY = 0;
+    var scrollStart = 0;
+    var lastY = 0;
+    var velocity = 0;
+    var lastTime = 0;
+    var rafId = null;
+
+    function getClientY(e) {
+        return e.touches ? e.touches[0].clientY : e.clientY;
+    }
+
+    function onStart(e) {
+        // Don't hijack clicks on interactive elements
+        if (e.target.closest('button, a, select, input')) return;
+
+        isDragging = true;
+        startY = getClientY(e);
+        scrollStart = el.scrollTop;
+        lastY = startY;
+        velocity = 0;
+        lastTime = Date.now();
+
+        el.classList.add('is-dragging');
+        if (rafId) cancelAnimationFrame(rafId);
+    }
+
+    function onMove(e) {
+        if (!isDragging) return;
+        e.preventDefault();
+
+        var y = getClientY(e);
+        var now = Date.now();
+        var dt = now - lastTime || 1;
+
+        velocity = (lastY - y) / dt;  // pixels/ms
+        lastY = y;
+        lastTime = now;
+
+        el.scrollTop = scrollStart + (startY - y);
+    }
+
+    function onEnd() {
+        if (!isDragging) return;
+        isDragging = false;
+        el.classList.remove('is-dragging');
+
+        // Momentum glide
+        var speed = velocity * 16; // convert to pixels/frame (~60fps)
+        function glide() {
+            if (Math.abs(speed) < 0.5) return;
+            el.scrollTop += speed;
+            speed *= 0.90; // friction
+            rafId = requestAnimationFrame(glide);
+        }
+        glide();
+    }
+
+    // Touch events
+    el.addEventListener('touchstart', onStart, { passive: true });
+    el.addEventListener('touchmove', onMove, { passive: false });
+    el.addEventListener('touchend', onEnd);
+    el.addEventListener('touchcancel', onEnd);
+
+    // Mouse events (for desktop drag simulation)
+    el.addEventListener('mousedown', onStart);
+    document.addEventListener('mousemove', onMove);
+    document.addEventListener('mouseup', onEnd);
+})();
