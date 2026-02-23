@@ -13,9 +13,7 @@
 body {
     font-family: 'Poppins', sans-serif;
     background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
-    height: 100vh;
-    overflow: hidden;
-    /* Prevent page scrolling */
+    min-height: 100vh;
     color: #2d3436;
 }
 
@@ -105,9 +103,6 @@ body {
     max-width: 1400px;
     margin: 0 auto;
     padding: 2rem;
-    height: calc(100vh - 70px);
-    display: flex;
-    flex-direction: column;
 }
 
 /* --- Summary Cards --- */
@@ -180,10 +175,6 @@ body {
     border-radius: 16px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
     overflow: hidden;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    min-height: 0;
 }
 
 .table-header {
@@ -198,18 +189,9 @@ body {
     margin: 0;
 }
 
-#table-content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    min-height: 0;
-}
-
 /* --- Responsive Table --- */
 .table-responsive {
-    overflow-y: auto;
     overflow-x: auto;
-    flex: 1;
 }
 
 .submissions-table {
@@ -351,25 +333,4 @@ body {
     .nav-user {
         display: none;
     }
-}
-
-/* --- Custom Scrollbar for Touch Screens --- */
-::-webkit-scrollbar {
-    width: 40px;
-    height: 40px;
-}
-
-::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 20px;
-}
-
-::-webkit-scrollbar-thumb {
-    background: #a8a8a8;
-    border-radius: 20px;
-    border: 7px solid #f1f1f1;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: #888888;
 }
