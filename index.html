@@ -44,70 +44,80 @@
         </header>
 
         <form class="needs-validation" novalidate id="surveyForm">
-            <!-- Name Row -->
-            <div class="form-row">
-                <label class="row-label">Name <small>(Optional)</small></label>
-                <div class="row-content">
-                    <input type="text" name="name" id="name" placeholder="Enter your full name or leave blank"
-                        autocomplete="off">
-                </div>
-            </div>
+            <div class="form-columns">
+                <!-- Left Column: Fields -->
+                <div class="form-col-left">
+                    <!-- Name Row -->
+                    <div class="form-row">
+                        <label class="row-label">Name <small>(Optional)</small></label>
+                        <div class="row-content">
+                            <input type="text" name="name" id="name" placeholder="Enter your full name or leave blank"
+                                autocomplete="off">
+                        </div>
+                    </div>
 
-            <!-- Category Row -->
-            <div class="form-row">
-                <label class="row-label">Your Category</label>
-                <div class="row-content">
-                    <div class="category-group">
-                        <div class="cat-item">
-                            <input class="form-check-input" type="radio" name="category" value="Student"
-                                id="cat_student" required>
-                            <label class="form-check-label" for="cat_student">Student</label>
+                    <!-- Category Row -->
+                    <div class="form-row">
+                        <label class="row-label">Your Category</label>
+                        <div class="row-content">
+                            <div class="category-group">
+                                <div class="cat-item">
+                                    <input class="form-check-input" type="radio" name="category" value="Student"
+                                        id="cat_student" required>
+                                    <label class="form-check-label" for="cat_student">Student</label>
+                                </div>
+                                <div class="cat-item">
+                                    <input class="form-check-input" type="radio" name="category" value="Employee"
+                                        id="cat_employee">
+                                    <label class="form-check-label" for="cat_employee">Employee</label>
+                                </div>
+                                <div class="cat-item">
+                                    <input class="form-check-input" type="radio" name="category" value="Others"
+                                        id="cat_others">
+                                    <label class="form-check-label" for="cat_others">Others</label>
+                                </div>
+                            </div>
                         </div>
-                        <div class="cat-item">
-                            <input class="form-check-input" type="radio" name="category" value="Employee"
-                                id="cat_employee">
-                            <label class="form-check-label" for="cat_employee">Employee</label>
+                    </div>
+
+                    <!-- Service Row -->
+                    <div class="form-row">
+                        <label class="row-label">Service / Purpose of Visit</label>
+                        <div class="row-content">
+                            <input type="text" name="service" id="service"
+                                placeholder="e.g. Enrollment, Document Request, Inquiry" required autocomplete="off">
                         </div>
-                        <div class="cat-item">
-                            <input class="form-check-input" type="radio" name="category" value="Others" id="cat_others">
-                            <label class="form-check-label" for="cat_others">Others</label>
+                    </div>
+
+                    <!-- Satisfaction Section -->
+                    <div class="satisfaction-section">
+                        <h3 class="section-title">Are you satisfied with our service?</h3>
+                        <div class="satisfaction-options">
+                            <input type="radio" class="btn-check" name="satisfaction" id="satisfied" value="Satisfied"
+                                required>
+                            <label class="sat-option" for="satisfied">
+                                <i class="far fa-smile sm-smile"></i>
+                                <span class="sat-label">Satisfied</span>
+                            </label>
+
+                            <input type="radio" class="btn-check" name="satisfaction" id="notsatisfied"
+                                value="Not Satisfied">
+                            <label class="sat-option" for="notsatisfied">
+                                <i class="far fa-frown sm-frown"></i>
+                                <span class="sat-label">Not Satisfied</span>
+                            </label>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Service Row -->
-            <div class="form-row">
-                <label class="row-label">Service / Purpose of Visit</label>
-                <div class="row-content">
-                    <input type="text" name="service" id="service"
-                        placeholder="e.g. Enrollment, Document Request, Inquiry" required autocomplete="off">
+                <!-- Right Column: Comments -->
+                <div class="form-col-right">
+                    <div class="comments-section">
+                        <label class="comments-label" for="comments">Comments & Suggestions</label>
+                        <textarea class="comments-area" name="comments" id="comments"
+                            placeholder="We value your feedback. Please share your thoughts here..."></textarea>
+                    </div>
                 </div>
-            </div>
-
-            <!-- Satisfaction Section -->
-            <div class="satisfaction-section">
-                <h3 class="section-title">Are you satisfied with our service?</h3>
-                <div class="satisfaction-options">
-                    <input type="radio" class="btn-check" name="satisfaction" id="satisfied" value="Satisfied" required>
-                    <label class="sat-option" for="satisfied">
-                        <i class="far fa-smile sm-smile"></i>
-                        <span class="sat-label">Satisfied</span>
-                    </label>
-
-                    <input type="radio" class="btn-check" name="satisfaction" id="notsatisfied" value="Not Satisfied">
-                    <label class="sat-option" for="notsatisfied">
-                        <i class="far fa-frown sm-frown"></i>
-                        <span class="sat-label">Not Satisfied</span>
-                    </label>
-                </div>
-            </div>
-
-            <!-- Comment Section -->
-            <div class="comments-section">
-                <label class="comments-label" for="comments">Comments & Suggestions</label>
-                <textarea class="comments-area" name="comments" id="comments"
-                    placeholder="We value your feedback. Please share your thoughts here..."></textarea>
             </div>
 
             <!-- Submit Button Area -->
@@ -122,6 +132,11 @@
             <p id="footer-year"></p>
             <a href="admin_login.html" class="admin-link">Admin Dashboard Access</a>
         </footer>
+    </div>
+
+    <!-- Touchscreen Indicator -->
+    <div class="touchscreen-indicator">
+        <i class="fas fa-hand-pointer"></i> This is a touch screen
     </div>
 
     <!-- Bootstrap Bundle with Popper -->
