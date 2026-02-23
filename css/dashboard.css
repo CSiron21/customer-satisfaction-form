@@ -13,7 +13,9 @@
 body {
     font-family: 'Poppins', sans-serif;
     background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
-    min-height: 100vh;
+    height: 100vh;
+    overflow: hidden;
+    /* Prevent page scrolling */
     color: #2d3436;
 }
 
@@ -103,6 +105,9 @@ body {
     max-width: 1400px;
     margin: 0 auto;
     padding: 2rem;
+    height: calc(100vh - 70px);
+    display: flex;
+    flex-direction: column;
 }
 
 /* --- Summary Cards --- */
@@ -175,6 +180,10 @@ body {
     border-radius: 16px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
     overflow: hidden;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
 }
 
 .table-header {
@@ -189,9 +198,18 @@ body {
     margin: 0;
 }
 
+#table-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
 /* --- Responsive Table --- */
 .table-responsive {
+    overflow-y: auto;
     overflow-x: auto;
+    flex: 1;
 }
 
 .submissions-table {
